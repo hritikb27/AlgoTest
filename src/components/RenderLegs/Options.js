@@ -153,9 +153,13 @@ const Options = ({ leg }) => {
         dispatch(addLeg(newLeg))
     }
 
+    const deleteLeg = (id) => {
+        const newLegs =  legs.filter((item) => item.id !== id);
+        dispatch(updateLeg(newLegs))
+    }
 
     return <div className="flex flex-col gap-5 bg-[#efefef] p-10 rounded-xl relative" key={leg.id}>
-        <AiFillDelete className="absolute right-[-5px] top-[-7px] cursor-pointer" />
+        <AiFillDelete className="absolute right-[-5px] top-[-7px] cursor-pointer" onClick={()=>deleteLeg(leg.id)} />
         <FaRegCopy className="absolute right-[-7px] top-[18px] cursor-pointer" onClick={()=>copyLeg(leg.id)} />
         <div className="flex gap-5 justify-center">
             <label>Lot</label>
