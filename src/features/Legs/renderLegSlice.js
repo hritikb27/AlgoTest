@@ -5,7 +5,7 @@ export const renderLegSlice = createSlice({
     initialState: {
         legs: [
             {
-                id: '1',
+                id: 1,
                 type: 'options',
                 value: 1,
                 SM: {

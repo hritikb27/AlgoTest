@@ -8,7 +8,7 @@ const RenderLegs = () => {
     const legs = useSelector(state => state.renderLegSlice.legs);
 
     return (
-        <div>
+        <div className="flex flex-col gap-5">
             {legs.map(leg => {
                 if (leg.type === 'options') {
                     return <SimpleMomentum leg={leg} />

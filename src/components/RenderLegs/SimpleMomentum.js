@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux"
 import { IoChevronDown, IoChevronUp } from 'react-icons/io5'
 import { AiFillQuestionCircle } from 'react-icons/ai'
-import { updateLeg } from "../../features/Legs/renderLegSlice";
-import './index.css'
+import { addLeg, updateLeg } from "../../features/Legs/renderLegSlice";
+import uuid from "react-uuid";
 
 const SimpleMomentum = ({ leg }) => {
     const legs = useSelector(state => state.renderLegSlice.legs);
@@ -24,6 +24,7 @@ const SimpleMomentum = ({ leg }) => {
     }
 
     const handleSMValue = (value, id) => {
+        console.log('ID: ', id)
         const newLegs = legs.map(leg => {
             if (leg.id === id) {
                 return {
@@ -94,6 +95,24 @@ const SimpleMomentum = ({ leg }) => {
 
         dispatch(updateLeg(newLegs))
     }
+    
+    const handleTSLselect = (checked, id) => {
+        const newLegs = legs.map(leg => {
+            if (leg.id === id) {
+                return {
+                    ...leg,
+                    TSL: {
+                        ...leg.TSL,
+                        checked: !checked,
+                    }
+                }
+            } else {
+                return leg
+            }
+        })
+
+        dispatch(updateLeg(newLegs))
+    }
 
     const handleSMtype = (value, id) => {
         const newLegs = legs.map(leg => {
@@ -131,7 +150,21 @@ const SimpleMomentum = ({ leg }) => {
         dispatch(updateLeg(newLegs))
     }
 
-    return <div className="flex flex-col gap-5" key={leg.id}>
+    const copyLeg = (id) => {
+        const copiedLeg = legs.find(leg => leg.id === id)
+
+        const newLeg = {
+            id: uuid(),
+            type: copiedLeg.type,
+            value: copiedLeg.value,
+            SM: copiedLeg.SM,
+            TSL: copiedLeg.TSL
+        }
+
+        dispatch(addLeg(newLeg))
+    }
+
+    return <div className="flex flex-col gap-5 bg-[#efefef] p-10 rounded-xl" key={leg.id}>
         <div className="flex gap-5 justify-center">
             <label>Lot</label>
             <div className="relative">
@@ -173,12 +206,12 @@ const SimpleMomentum = ({ leg }) => {
 
             <div>
                 <div className="flex gap-2">
-                    <input type='checkbox' checked={leg.TSL.checked} onChange={() => handleSMselect(leg.TSL.checked, leg.id)} />
+                    <input type='checkbox' checked={leg.TSL.checked} onChange={() => handleTSLselect(leg.TSL.checked, leg.id)} />
                     <label>Trail SL</label>
                 </div>
 
                 <div className="flex gap-5">
-                    <select defaultValue={leg.TSL.type} onChange={(event) => handleSMtype(event.target.value, leg.id)} className="rounded-2xl px-3">
+                    <select defaultValue={leg.TSL.type} onChange={(event) => handleTSLtype(event.target.value, leg.id)} className="rounded-2xl px-3">
                         <option>Points</option>
                         <option>Percentage</option>
                     </select>
@@ -197,6 +230,8 @@ const SimpleMomentum = ({ leg }) => {
                 </div>
             </div>
         </div>
+
+        <button onClick={() => copyLeg(leg.id)}>Copy</button>
     </div>
 }
 
