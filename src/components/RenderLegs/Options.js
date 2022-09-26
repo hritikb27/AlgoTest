@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from "react-redux"
 import { IoChevronDown, IoChevronUp } from 'react-icons/io5'
 import { AiFillQuestionCircle } from 'react-icons/ai'
-import { addLeg, updateLeg } from "../../features/Legs/renderLegSlice";
-import uuid from "react-uuid";
+import { updateLeg } from "../../features/Legs/renderLegSlice";
 
-const SimpleMomentum = ({ leg }) => {
+const options = ['ITM1', 'ITM2', 'ITM3', 'ITM4', 'ITM5','ATM', 'OTM1','OTM2','OTM3','OTM4'];
+
+const Options = ({ leg }) => {
     const legs = useSelector(state => state.renderLegSlice.legs);
     const dispatch = useDispatch();
 
@@ -23,15 +24,51 @@ const SimpleMomentum = ({ leg }) => {
         dispatch(updateLeg(newLegs))
     }
 
-    const handleSMValue = (value, id) => {
-        console.log('ID: ', id)
+    const handleSMselect = (checked, id) => {
+        console.log(checked)
         const newLegs = legs.map(leg => {
             if (leg.id === id) {
                 return {
                     ...leg,
                     SM: {
                         ...leg.SM,
-                        value: value,
+                        checked: !checked,
+                    }
+                }
+            } else {
+                return leg
+            }
+        })
+
+        dispatch(updateLeg(newLegs))
+    }
+
+    const handleTSLselect = (checked, id) => {
+        const newLegs = legs.map(leg => {
+            if (leg.id === id) {
+                return {
+                    ...leg,
+                    TSL: {
+                        ...leg.TSL,
+                        checked: !checked,
+                    }
+                }
+            } else {
+                return leg
+            }
+        })
+
+        dispatch(updateLeg(newLegs))
+    }
+
+    const handleSMtype = (value, id) => {
+        const newLegs = legs.map(leg => {
+            if (leg.id === id) {
+                return {
+                    ...leg,
+                    SM: {
+                        ...leg.SM,
+                        type: value,
                     }
                 }
             } else {
@@ -77,61 +114,6 @@ const SimpleMomentum = ({ leg }) => {
         dispatch(updateLeg(newLegs))
     }
 
-    const handleSMselect = (checked, id) => {
-        console.log(checked)
-        const newLegs = legs.map(leg => {
-            if (leg.id === id) {
-                return {
-                    ...leg,
-                    SM: {
-                        ...leg.SM,
-                        checked: !checked,
-                    }
-                }
-            } else {
-                return leg
-            }
-        })
-
-        dispatch(updateLeg(newLegs))
-    }
-    
-    const handleTSLselect = (checked, id) => {
-        const newLegs = legs.map(leg => {
-            if (leg.id === id) {
-                return {
-                    ...leg,
-                    TSL: {
-                        ...leg.TSL,
-                        checked: !checked,
-                    }
-                }
-            } else {
-                return leg
-            }
-        })
-
-        dispatch(updateLeg(newLegs))
-    }
-
-    const handleSMtype = (value, id) => {
-        const newLegs = legs.map(leg => {
-            if (leg.id === id) {
-                return {
-                    ...leg,
-                    SM: {
-                        ...leg.SM,
-                        type: value,
-                    }
-                }
-            } else {
-                return leg
-            }
-        })
-
-        dispatch(updateLeg(newLegs))
-    }
-
     const handleTSLtype = (value, id) => {
         const newLegs = legs.map(leg => {
             if (leg.id === id) {
@@ -150,20 +132,6 @@ const SimpleMomentum = ({ leg }) => {
         dispatch(updateLeg(newLegs))
     }
 
-    const copyLeg = (id) => {
-        const copiedLeg = legs.find(leg => leg.id === id)
-
-        const newLeg = {
-            id: uuid(),
-            type: copiedLeg.type,
-            value: copiedLeg.value,
-            SM: copiedLeg.SM,
-            TSL: copiedLeg.TSL
-        }
-
-        dispatch(addLeg(newLeg))
-    }
-
     return <div className="flex flex-col gap-5 bg-[#efefef] p-10 rounded-xl" key={leg.id}>
         <div className="flex gap-5 justify-center">
             <label>Lot</label>
@@ -172,9 +140,33 @@ const SimpleMomentum = ({ leg }) => {
                 <IoChevronUp className='absolute right-3 top-0 text-[#C7C7C7]' />
                 <IoChevronDown className='absolute right-3 bottom-0 text-[#C7C7C7]' />
             </div>
-            <select className="bg-[#375a9e] text-white">
+            <select defaultValue={leg.position} className="bg-[#375a9e] text-white" >
                 <option>Sell</option>
                 <option>Buy</option>
+            </select>
+            <select defaultValue={leg.optionType} className="bg-[#375a9e] text-white">
+                <option>Call</option>
+                <option>Put</option>
+            </select>
+            <select defaultValue={leg.expiry} className="bg-[#375a9e] text-white">
+                <option>Weekly</option>
+                <option>Monthly</option>
+            </select>
+            <label>Select Strike</label>
+            <select defaultValue={leg.expiry} className="bg-[#375a9e] text-white">
+                <option>Strike Type</option>
+                <option>Premium Range</option>
+                <option>Closest Premium</option>
+                <option>Straddle Width</option>
+            </select>
+            <select defaultValue={leg.strikeType} className="bg-[#375a9e] text-white">
+                <option>Weekly</option>
+                <option>Monthly</option>
+            </select>
+            <select defaultValue={leg.position} className="bg-[#375a9e] text-white" >
+                {options.map(option=>{
+                    return <option>{option}</option>
+                })}
             </select>
         </div>
 
@@ -197,13 +189,12 @@ const SimpleMomentum = ({ leg }) => {
                     </select>
 
                     <div className="relative">
-                        <input type='number' min='1' value={leg.SM.value} onChange={(event) => handleSMValue(event.target.value, leg.id)} className='appearance-none border border-[#f6f6f6] rounded-xl h-[25px] w-[80px] px-3 py-[2px] text-xs ' />
+                        <input type='number' min='1' value={leg.SM.value} onChange={(event) => handleLotValue(event.target.value, leg.id)} className='appearance-none border border-[#f6f6f6] rounded-xl h-[25px] w-[80px] px-3 py-[2px] text-xs ' />
                         <IoChevronUp className='absolute right-3 top-0 text-[#C7C7C7]' />
                         <IoChevronDown className='absolute right-3 bottom-0 text-[#C7C7C7]' />
                     </div>
                 </div>
             </div>
-
             <div>
                 <div className="flex gap-2">
                     <input type='checkbox' checked={leg.TSL.checked} onChange={() => handleTSLselect(leg.TSL.checked, leg.id)} />
@@ -230,9 +221,7 @@ const SimpleMomentum = ({ leg }) => {
                 </div>
             </div>
         </div>
-
-        <button onClick={() => copyLeg(leg.id)}>Copy</button>
     </div>
 }
 
-export default SimpleMomentum;
+export default Options;
