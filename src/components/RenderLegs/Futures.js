@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from "react-redux"
 import { IoChevronDown, IoChevronUp } from 'react-icons/io5'
-import { AiFillQuestionCircle } from 'react-icons/ai'
+import { AiFillDelete, AiFillQuestionCircle } from 'react-icons/ai'
 import { addLeg, updateLeg } from "../../features/Legs/renderLegSlice";
 import uuid from "react-uuid";
+import { FaRegCopy } from "react-icons/fa";
 
 const Futures = ({ leg }) => {
     const legs = useSelector(state => state.renderLegSlice.legs);
@@ -164,7 +165,9 @@ const Futures = ({ leg }) => {
         dispatch(addLeg(newLeg))
     }
 
-    return <div className="flex flex-col gap-5 bg-[#efefef] p-10 rounded-xl" key={leg.id}>
+    return <div className="relative flex flex-col gap-5 bg-[#efefef] p-10 rounded-xl" key={leg.id}>
+        <AiFillDelete className="absolute right-[-5px] top-[-7px] cursor-pointer" />
+        <FaRegCopy className="absolute right-[-7px] top-[18px] cursor-pointer" onClick={()=>copyLeg(leg.id)} />
         <div className="flex gap-5 justify-center">
             <label>Lot</label>
             <div className="relative">
@@ -230,8 +233,6 @@ const Futures = ({ leg }) => {
                 </div>
             </div>
         </div>
-
-        <button onClick={() => copyLeg(leg.id)}>Copy</button>
     </div>
 }
 
