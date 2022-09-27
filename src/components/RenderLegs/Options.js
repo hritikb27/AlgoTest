@@ -292,7 +292,7 @@ const Options = ({ leg }) => {
                     <input type='checkbox' checked={leg.SM.checked} onChange={() => handleSMselect(leg.SM.checked, leg.id)} />
                     <label>Simple Momentum</label>
                 </div>
-                <div className="flex gap-5">
+                <div className={leg.SM.checked ? "flex gap-5" : "flex gap-5 opacity-30"}>
                     <select defaultValue={leg.SM.type} onChange={(event) => handleSMtype(event.target.value, leg.id)} className="rounded-2xl px-3">
                         <option>Points ↑</option>
                         <option>Points ↓</option>
@@ -317,7 +317,7 @@ const Options = ({ leg }) => {
                     <label>Trail SL</label>
                 </div>
 
-                <div className="flex gap-5">
+                <div className={leg.TSL.checked ? "flex gap-5" : "flex gap-5 opacity-30"}>
                     <select defaultValue={leg.TSL.type} onChange={(event) => handleTSLtype(event.target.value, leg.id)} className="rounded-2xl px-3">
                         <option>Points</option>
                         <option>Percentage</option>
