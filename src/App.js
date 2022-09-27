@@ -25,12 +25,12 @@ function App() {
         strikeCriteria: optionsLeg.strikeCriteria,
         strikeType: optionsLeg.strikeType,
         SM: {
-          checked: true,
+          checked: false,
           type: 'Underlying Percentage ↓',
-          value: 2
+          value: 0
         },
         TSL: {
-          checked: true,
+          checked: false,
           type: 'Points',
           value1: 0,
           value2: 0,
@@ -40,14 +40,15 @@ function App() {
       newLeg = {
         id: uuid(),
         type: 'futures',
-        value: futureLeg.value,
+        position: futureLeg.position,
+        totalLot: futureLeg.totalLot,
         SM: {
-          checked: true,
+          checked: false,
           type: 'Underlying Percentage ↓',
-          value: 2
+          value: 0
         },
         TSL: {
-          checked: true,
+          checked: false,
           type: 'Points',
           value1: 0,
           value2: 0,

@@ -4,44 +4,8 @@ export const renderLegSlice = createSlice({
     name: 'renderLegs',
     initialState: {
         legs: [
-            {
-                id: 2,
-                type: 'options',
-                totalLot: 0,
-                position: 'Sell',
-                optionType: 'Call',
-                expiry: 'Weekly',
-                strikeCriteria: 'Strike Type',
-                strikeType: 'ITM17',
-                SM: {
-                    checked: true,
-                    type: 'Underlying Percentage ↓',
-                    value: 2
-                },
-                TSL: {
-                    checked: true,
-                    type: 'Points',
-                    value1: 0,
-                    value2: 0,
-                }
-            },
-            {
-                id: 1,
-                type: 'futures',
-                position: 'Sell',
-                value: 1,
-                SM: {
-                    checked: true,
-                    type: 'Underlying Percentage ↓',
-                    value: 2
-                },
-                TSL: {
-                    checked: true,
-                    type: 'Points',
-                    value1: 0,
-                    value2: 0,
-                }
-            },]
+
+        ]
     },
     reducers: {
         updateLeg: (state, action) => {

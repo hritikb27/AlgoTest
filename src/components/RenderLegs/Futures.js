@@ -14,7 +14,7 @@ const Futures = ({ leg }) => {
             if (leg.id === id) {
                 return {
                     ...leg,
-                    value: value,
+                    totalLot: value,
                 }
             } else {
                 return leg
@@ -173,7 +173,7 @@ const Futures = ({ leg }) => {
             id: uuid(),
             type: copiedLeg.type,
             position: copiedLeg.position,
-            value: copiedLeg.value,
+            totalLot: copiedLeg.totalLot,
             SM: copiedLeg.SM,
             TSL: copiedLeg.TSL
         }
@@ -192,7 +192,7 @@ const Futures = ({ leg }) => {
         <div className="flex gap-5 justify-center">
             <label>Lot</label>
             <div className="relative">
-                <input type='number' min='1' value={leg.value} onChange={(event) => handleLotValue(event.target.value, leg.id)} className='appearance-none border border-[#f6f6f6] rounded-xl h-[25px] w-[80px] px-3 py-[2px] text-xs ' />
+                <input type='number' min='1' value={leg.totalLot} onChange={(event) => handleLotValue(event.target.value, leg.id)} className='appearance-none border border-[#f6f6f6] rounded-xl h-[25px] w-[80px] px-3 py-[2px] text-xs ' />
                 <IoChevronUp className='absolute right-3 top-0 text-[#C7C7C7]' />
                 <IoChevronDown className='absolute right-3 bottom-0 text-[#C7C7C7]' />
             </div>
