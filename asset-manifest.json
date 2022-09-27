@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/AlgoTest/static/css/main.cbcc74e6.css",
+    "main.js": "/AlgoTest/static/js/main.33172ae3.js",
+    "static/js/787.c1ce9508.chunk.js": "/AlgoTest/static/js/787.c1ce9508.chunk.js",
+    "index.html": "/AlgoTest/index.html",
+    "main.cbcc74e6.css.map": "/AlgoTest/static/css/main.cbcc74e6.css.map",
+    "main.33172ae3.js.map": "/AlgoTest/static/js/main.33172ae3.js.map",
+    "787.c1ce9508.chunk.js.map": "/AlgoTest/static/js/787.c1ce9508.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.cbcc74e6.css",
+    "static/js/main.33172ae3.js"
+  ]
+}
